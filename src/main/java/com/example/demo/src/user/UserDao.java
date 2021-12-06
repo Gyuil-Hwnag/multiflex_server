@@ -82,7 +82,6 @@ public class UserDao {
         return this.jdbcTemplate.queryForObject(checkEmailQuery,
                 int.class,
                 checkEmailParams);
-
     }
 
     public int modifyUserName(PatchUserReq patchUserReq){
