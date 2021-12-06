@@ -159,4 +159,20 @@ public class EmployeeController {
     }
 
 
+    @ResponseBody
+    @PatchMapping("/works")
+    public BaseResponse<String> modifyWorks(@RequestBody PathWorkReq pathWorkReq){
+        try {
+            employeeService.modifyWork(pathWorkReq);
+            String result = "";
+            if(pathWorkReq.getStatus() == 1){result = pathWorkReq.getEmployeeIdx()+" 님이 "+"출근";}
+            else{result = pathWorkReq.getEmployeeIdx()+" 님이 "+"퇴근";}
+            return new BaseResponse<>(result);
+//            return new BaseResponse<>(result);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
 }

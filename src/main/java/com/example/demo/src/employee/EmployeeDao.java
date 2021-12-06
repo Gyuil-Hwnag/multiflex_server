@@ -1,10 +1,7 @@
 package com.example.demo.src.employee;
 
 
-import com.example.demo.src.employee.model.Employee;
-import com.example.demo.src.employee.model.GetEmployeeRes;
-import com.example.demo.src.employee.model.PostEmpLoginReq;
-import com.example.demo.src.employee.model.PostEmployeeReq;
+import com.example.demo.src.employee.model.*;
 import com.example.demo.src.user.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -68,7 +65,7 @@ public class EmployeeDao {
 
     // 일하고 있는 직원 목록
     public List<GetEmployeeRes> getEmployeeWorks(){
-        String getUsersByEmailQuery = "select * from Employee where status =?";
+        String getUsersByEmailQuery = "select * from Employee where status = ?";
         int getUsersByEmailParams = 1;
         return this.jdbcTemplate.query(getUsersByEmailQuery,
                 (rs, rowNum) -> new GetEmployeeRes(
@@ -83,6 +80,8 @@ public class EmployeeDao {
                 ),
                 getUsersByEmailParams);
     }
+
+
 
     public GetEmployeeRes getEmployee(int employeeIdx){
         String getUserQuery = "select * from Employee where employeeIdx = ?";
@@ -117,6 +116,14 @@ public class EmployeeDao {
                 int.class,
                 checkEmailParams);
     }
+
+    // 직원 출퇴근
+    public int modifyWorks(PathWorkReq pathWorkReq){
+        String modifyUserNameQuery = "update Employee set status = ? where employeeIdx = ? ";
+        Object[] modifyUserNameParams = new Object[]{pathWorkReq.getStatus(), pathWorkReq.getEmployeeIdx()};
+        return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
+    }
+
 
     public int modifyUserName(PatchUserReq patchUserReq){
         String modifyUserNameQuery = "update UserInfo set userName = ? where userIdx = ? ";

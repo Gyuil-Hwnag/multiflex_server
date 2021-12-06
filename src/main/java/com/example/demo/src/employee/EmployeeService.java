@@ -3,6 +3,7 @@ package com.example.demo.src.employee;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.secret.Secret;
+import com.example.demo.src.employee.model.PathWorkReq;
 import com.example.demo.src.employee.model.PostEmployeeReq;
 import com.example.demo.src.employee.model.PostEmployeeRes;
 import com.example.demo.src.user.UserDao;
@@ -57,6 +58,17 @@ public class EmployeeService {
             String jwt = jwtService.createJwt(userIdx);
             return new PostEmployeeRes(jwt,userIdx);
         } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public void modifyWork(PathWorkReq pathWorkReq) throws BaseException {
+        try{
+            int result = employeeDao.modifyWorks(pathWorkReq);
+            if(result == 0){
+                throw new BaseException(MODIFY_FAIL_USERNAME);
+            }
+        } catch(Exception exception){
             throw new BaseException(DATABASE_ERROR);
         }
     }
