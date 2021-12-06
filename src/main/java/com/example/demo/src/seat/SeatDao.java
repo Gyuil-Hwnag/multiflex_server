@@ -22,13 +22,13 @@ public class SeatDao {
                 (rs, rowNum) -> new GetSeatRes(
                         rs.getInt("movietimeIdx"),
                         rs.getInt("seatIdx"),
-                        rs.getInt("status")),
+                        rs.getInt("userIdx")),
                 getSeatsByMovieTimeParams);
     }
 
     public int modifySeatstatus(PatchSeatReq patchSeatReq){
-        String modifySeatStatusQuery = "update seatinfo set status = ? where movietimeIdx = ? and seatIdx = ?";
-        Object[] modifySeatStatusParams = new Object[]{patchSeatReq.getStatus(), patchSeatReq.getMovietimeIdx(), patchSeatReq.getSeatIdx()};
+        String modifySeatStatusQuery = "update seatinfo set userIdx = ? where movietimeIdx = ? and seatIdx = ?";
+        Object[] modifySeatStatusParams = new Object[]{patchSeatReq.getUserIdx(), patchSeatReq.getMovietimeIdx(), patchSeatReq.getSeatIdx()};
 
         return this.jdbcTemplate.update(modifySeatStatusQuery, modifySeatStatusParams);
     }

@@ -10,5 +10,6 @@ import lombok.Setter;
 public class PatchSeatReq {
     private int movietimeIdx;
     private int seatIdx;
-    private int status;
+    private int userIdx;
+
 }

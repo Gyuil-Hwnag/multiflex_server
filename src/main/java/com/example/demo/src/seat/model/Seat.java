@@ -10,5 +10,5 @@ import lombok.Setter;
 public class Seat {
     private int movietimeIdx;
     private int seatIdx;
-    private int status;
+    private int userIdx;
 }

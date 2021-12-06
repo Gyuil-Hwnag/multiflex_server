@@ -43,7 +43,7 @@ public class MovieTimeDao {
     }
 
     public int getRemainSeat(int movietimeIdx){
-        String getTotalCountQuery = "select count(*) from seatinfo where movietimeIdx = ? and status = 0";
+        String getTotalCountQuery = "select count(*) from seatinfo where movietimeIdx = ? and userIdx = 0";
         int getTotalCountParams = movietimeIdx;
         return this.jdbcTemplate.queryForObject(getTotalCountQuery,
                 int.class,

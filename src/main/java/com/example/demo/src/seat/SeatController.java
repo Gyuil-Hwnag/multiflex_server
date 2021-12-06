@@ -49,14 +49,14 @@ public class SeatController {
     * {
     *   "movietimeIdx":1,
     *   "seatIdx":2,
-    *   "status":1
+    *   "userIdx":1
     * }
     *
     */
     @PatchMapping("/seats/modify")
     public BaseResponse<String> modifySeatStatus(@RequestBody Seat seat){
         try{
-            PatchSeatReq patchSeatReq = new PatchSeatReq(seat.getMovietimeIdx(),seat.getSeatIdx(),seat.getStatus());
+            PatchSeatReq patchSeatReq = new PatchSeatReq(seat.getMovietimeIdx(),seat.getSeatIdx(),seat.getUserIdx());
             seatService.modifySeatStatus(patchSeatReq);
 
             String result = "성공";
