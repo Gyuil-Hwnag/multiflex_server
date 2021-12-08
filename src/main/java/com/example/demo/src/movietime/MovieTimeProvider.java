@@ -32,6 +32,15 @@ public class MovieTimeProvider {
         }
     }
 
+    public List<GetMovieTimeSeatsRes> getMovieTimeSeatsByParams(String showdate, int movieIdx, int branchIdx) throws BaseException{
+        try{
+            List<GetMovieTimeSeatsRes> getMovieTimeSeatsRes = movieTimeDao.getMovieTimeSeatsByParams(showdate, movieIdx, branchIdx);
+            return getMovieTimeSeatsRes;
+        }catch(Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+
     public int getTotalSeat(int movietimeIdx) throws BaseException{
         try{
             return movieTimeDao.getTotalSeat(movietimeIdx);

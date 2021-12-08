@@ -34,6 +34,36 @@ public class MovieTimeDao {
                 getMovieTimeParam0, getMovieTimeParam1,getMovieTimeParam2);
     }
 
+    public List<GetMovieTimeSeatsRes> getMovieTimeSeatsByParams(String showdate, int movieIdx, int branchIdx){
+        String getMTSQuery = "select t1.Idx, t1.movieIdx, t1.theaterIdx, t1.showdate, t1.startTime, t1.endTime,  t2.count_remain\n" +
+                            "from\n" +
+                            "(select movietime.Idx, movieIdx, theaterIdx, showdate, startTime, endTime\n" +
+                            "from movietime inner join theater\n" +
+                            "on movietime.theaterIdx = theater.Idx\n" +
+                            "where showdate = ? and movieIdx = ? and branchIdx = ?)\n" +
+                            "as t1\n" +
+                            "inner join\n" +
+                            "(select movietimeIdx, count(seatIdx) as count_remain\n" +
+                            "from seatinfo\n" +
+                            "where userIdx = 0\n" +
+                            "group by movietimeIdx) as t2\n" +
+                            "on t1.Idx = t2.movietimeIdx;";
+        String getMTSParam1 = showdate;
+        int getMTSParam2 = movieIdx;
+        int getMTSParam3 = branchIdx;
+
+        return this.jdbcTemplate.query(getMTSQuery,
+                (rs, rowNum) -> new GetMovieTimeSeatsRes(
+                        rs.getInt("Idx"),
+                        rs.getInt("movieIdx"),
+                        rs.getInt("theaterIdx"),
+                        rs.getString("showdate"),
+                        rs.getString("startTime"),
+                        rs.getString("endTime"),
+                        rs.getInt("count_remain")),
+                getMTSParam1, getMTSParam2, getMTSParam3);
+    }
+
     public int getTotalSeat(int movietimeIdx){
         String getTotalCountQuery = "select count(*) from seatinfo where movietimeIdx = ?";
         int getTotalCountParams = movietimeIdx;

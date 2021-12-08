@@ -126,3 +126,19 @@ com/example/demo/src/employee/model/PathWorkReq.java
  com.example.demo.src.employee.model.PathWorkReq
 com/example/demo/src/movietime/MovieTimeController.java
  com.example.demo.src.movietime.MovieTimeController
+com/example/demo/src/ticket/TicketContoller.java
+ com.example.demo.src.ticket.TicketContoller
+com/example/demo/src/ticket/TicketProvider.java
+ com.example.demo.src.ticket.TicketProvider
+com/example/demo/src/ticket/model/PostTicketReq.java
+ com.example.demo.src.ticket.model.PostTicketReq
+com/example/demo/src/ticket/model/Ticket.java
+ com.example.demo.src.ticket.model.Ticket
+com/example/demo/src/ticket/TicketService.java
+ com.example.demo.src.ticket.TicketService
+com/example/demo/src/ticket/TicketDao.java
+ com.example.demo.src.ticket.TicketDao
+com/example/demo/src/ticket/model/GetTicketRes.java
+ com.example.demo.src.ticket.model.GetTicketRes
+com/example/demo/src/ticket/model/PostTicketRes.java
+ com.example.demo.src.ticket.model.PostTicketRes

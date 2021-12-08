@@ -38,6 +38,18 @@ public class MovieTimeController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    @ResponseBody
+    @GetMapping("/mts")
+    public BaseResponse<List<GetMovieTimeSeatsRes>> getMovieTimeSeat(@RequestParam(required = true) String showdate, @RequestParam(required = true) int movieIdx, @RequestParam(required = true) int branchIdx){
+        try{
+            List<GetMovieTimeSeatsRes> getMovieTimeSeatsRes = movieTimeProvider.getMovieTimeSeatsByParams(showdate, movieIdx, branchIdx);
+            return new BaseResponse<>(getMovieTimeSeatsRes);
+        }catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
     // 전체 좌석 개수 조회 [GET]/app/totalseats?movietimeIdx=?
     @ResponseBody
     @GetMapping("/totalseats")
@@ -50,7 +62,7 @@ public class MovieTimeController {
         }
     }
 
-    // 전체 좌석 개수 조회 [GET]/app/remainseats?movietimeIdx=?
+    // 남은 좌석 개수 조회 [GET]/app/remainseats?movietimeIdx=?
     @ResponseBody
     @GetMapping("/remainseats")
     public BaseResponse getRemainSeat(@RequestParam(required = false) int movietimeIdx){
