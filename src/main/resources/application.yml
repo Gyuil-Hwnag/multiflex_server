@@ -1,9 +1,10 @@
 server:
-  port: 9000
+  port: 8080
 
 spring:
   application:
     name: demo
+
 
   datasource:
     platform: mysql
