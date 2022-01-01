@@ -17,7 +17,7 @@ import java.util.Date;
 import static com.example.demo.config.BaseResponseStatus.*;
 
 @Service
-public class JwtService {
+public class  JwtService {
 
     /*
     JWT 생성

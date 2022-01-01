@@ -5,7 +5,6 @@ spring:
   application:
     name: demo
 
-
   datasource:
     platform: mysql
     url: jdbc:mysql://multiflex.c2trjqenb9f1.ap-northeast-2.rds.amazonaws.com:3306/multiflex?autoReconnect=true # 변경해주세요

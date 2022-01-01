@@ -61,6 +61,11 @@ dependencies {
     // google login
     compile('org.springframework.boot:spring-boot-starter-oauth2-client')
 
+    // fire base
+    compile group: 'com.google.firebase', name: 'firebase-admin', version: '7.1.0'
+    //okhttp3
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.2.2'
+
 }
 
 test {
