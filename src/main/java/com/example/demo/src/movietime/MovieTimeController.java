@@ -5,9 +5,12 @@ import com.example.demo.config.BaseResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.src.movietime.model.*;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @RestController
@@ -20,6 +23,38 @@ public class MovieTimeController {
 
     public MovieTimeController(MovieTimeProvider movieTimeProvider){
         this.movieTimeProvider = movieTimeProvider;
+    }
+
+    /*
+     * 영화상영시간 전체 조회 API
+     * [GET]/app/movietimes?showdate=2021-11-30&movieIdx=1&branchIdx=1
+     */
+    @ResponseBody
+    @GetMapping("/movietime-all")
+    public BaseResponse<List<GetMovieTimeRes>> getMovieTimeAll(){
+        try{
+            List<GetMovieTimeRes> getMovieTimeRes = movieTimeProvider.getMovieTimes();
+            return new BaseResponse<>(getMovieTimeRes);
+        }
+        catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    // paging
+    @ResponseBody
+    @GetMapping("/movietime/paging")
+    public BaseResponse<List<GetMovieTimeRes>> getMovieTimePaging(
+            @RequestParam(required = true) int size,
+            @RequestParam(required = true) int page
+            ){
+        try{
+            List<GetMovieTimeRes> getMovieTimeRes = movieTimeProvider.getMovieTimePaging(size, page);
+            return new BaseResponse<>(getMovieTimeRes);
+        }
+        catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
     }
 
 

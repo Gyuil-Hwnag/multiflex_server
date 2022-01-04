@@ -2,6 +2,7 @@ package com.example.demo.src.movietime;
 
 import com.example.demo.src.movietime.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,41 @@ public class MovieTimeDao {
 
     @Autowired
     public void setDataSource(DataSource dataSource){this.jdbcTemplate = new JdbcTemplate(dataSource);}
+
+    public List<GetMovieTimeRes> getMovieTimes(){
+        String getMovieTimeQuery = "select * from movietime\n";
+        return this.jdbcTemplate.query(getMovieTimeQuery,
+                (rs, rowNum) -> new GetMovieTimeRes(
+                        rs.getInt("Idx"),
+                        rs.getInt("movieIdx"),
+                        rs.getInt("theaterIdx"),
+                        rs.getString("showdate"),
+                        rs.getString("startTime"),
+                        rs.getString("endTime")
+                ));
+    }
+
+    public List<GetMovieTimeRes> getMovieTimePaging(int size, int pages){
+        String getMovieTimeQuery = "select * from movietime limit ?, ?\n";
+        int getSize = size;
+        int getPage;
+        if(pages == 1){
+            getPage = 0;
+        }
+        else{
+            getPage = (pages-1)*size;
+        }
+
+        return this.jdbcTemplate.query(getMovieTimeQuery,
+                (rs, rowNum) -> new GetMovieTimeRes(
+                        rs.getInt("Idx"),
+                        rs.getInt("movieIdx"),
+                        rs.getInt("theaterIdx"),
+                        rs.getString("showdate"),
+                        rs.getString("startTime"),
+                        rs.getString("endTime")),
+                getPage, getSize);
+    }
 
     public List<GetMovieTimeRes> getMovieTimesByParams(String showdate,int movieIdx, int branchIdx){
         String getMovieTimeQuery = "select movietime.Idx, movieIdx, theaterIdx, showdate, startTime, endTime\n" +

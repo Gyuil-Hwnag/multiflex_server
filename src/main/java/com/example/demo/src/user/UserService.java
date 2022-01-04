@@ -32,7 +32,6 @@ public class UserService {
         this.userDao = userDao;
         this.userProvider = userProvider;
         this.jwtService = jwtService;
-
     }
 
     //POST
