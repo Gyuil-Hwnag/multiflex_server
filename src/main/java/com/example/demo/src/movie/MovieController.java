@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("/app/movies")
+@RequestMapping("/app/movie")
 public class MovieController {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -37,30 +37,38 @@ public class MovieController {
         this.eventService = eventService;
     }
 
-    /**
-     * 회원 조회 API
-     * [GET] /customers
-     * 회원 번호 및 이메일 검색 조회 API
-     * @return BaseResponse<List<GetUserRes>>
-     */
     //Query String
     // 여러객체 보내주기
     @ResponseBody
-    @GetMapping("") // (GET) 127.0.0.1:9000/app/users
+    @GetMapping("/main") // (GET) 127.0.0.1:9000/app/users
     public BaseResponse<Map> getMovies() {
         try{
             // Get Users
             List<GetMovieRes> getMovieRes = movieProvider.getMovies();
             List<GetEventRes> getEventRes = eventProvider.getEvents();
-            ArrayList<Object> response = new ArrayList<>();
-            response.add(getMovieRes);
-            response.add(getEventRes);
+//            ArrayList<Object> response = new ArrayList<>();
+//            response.add(getMovieRes);
+//            response.add(getEventRes);
 
             Map<String, Object> result = new LinkedMultiValueMap();
             result.put("movie", getMovieRes);
             result.put("events", getEventRes);
 
             return new BaseResponse<>(result);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    // movie 객체
+    //Query String
+    @ResponseBody
+    @GetMapping("") // (GET) 127.0.0.1:9000/app/users
+    public BaseResponse<List<GetMovieRes>> getEvents() {
+        try{
+            // Get Users
+            List<GetMovieRes> getMovieRes = movieProvider.getMovies();
+            return new BaseResponse<>(getMovieRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }
